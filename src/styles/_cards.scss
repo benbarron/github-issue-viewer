@@ -1,0 +1,17 @@
+.card {
+  margin-top: 15px;
+  .card-body {
+    padding: 10px !important;
+    a {
+      color: #007dc6;
+    }
+    p {
+      &.date {
+        font-size: 14px;
+        color: #333;
+      }
+      padding: 0;
+      margin: 0;
+    }
+  }
+}

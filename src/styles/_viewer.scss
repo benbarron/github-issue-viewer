@@ -1,0 +1,17 @@
+.issue-viewer {
+  .card {
+    p {
+      align-self: center;
+      margin: 0;
+      margin-left: 10px;
+    }
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+  }
+  .issue-number {
+    color: #007dc6;
+  }
+}
