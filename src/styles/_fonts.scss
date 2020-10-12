@@ -1,0 +1,22 @@
+@font-face {
+  font-family: BogleBold;
+  src: url('/fonts/BogleWeb-Bold.woff2');
+}
+
+@font-face {
+  font-family: BogleRegular;
+  src: url('/fonts/BogleWeb-Regular.woff2');
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+li,
+span,
+p {
+  font-family: BogleRegular !important;
+}

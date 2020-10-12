@@ -1,0 +1,25 @@
+#header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 2px solid #333;
+  .header-left {
+    .brand-image {
+      width: 75px;
+      height: 75px;
+    }
+  }
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    .header-first {
+      font-size: 26px;
+      color: #333;
+    }
+    .header-second {
+      font-size: 20px;
+      color: #777;
+    }
+  }
+}
