@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from 'react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown/with-html';
 import { Comment } from '../types';
 
 interface Props {
@@ -16,6 +16,7 @@ const IssueComment: FC<Props> = (props: Props) => {
               <div className="d-flex">
                 <img
                   src={props.comment.user.avatar_url}
+                  alt={props.comment.user.login}
                   className="user-avatar"
                 />
                 <p className="user-login">{props.comment.user.login}</p>
@@ -29,7 +30,7 @@ const IssueComment: FC<Props> = (props: Props) => {
               </div>
             </div>
             <div className="card-body">
-              <ReactMarkdown source={props.comment.body} />
+              <ReactMarkdown source={props.comment.body} escapeHtml={false} />
             </div>
           </div>
         </div>

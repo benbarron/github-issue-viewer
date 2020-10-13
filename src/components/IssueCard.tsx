@@ -29,7 +29,7 @@ const IssueCard: FC<Props> = (props: Props) => {
           <p className="date">
             {'Created at: ' +
               new Date(props.issue.created_at).toLocaleDateString() +
-              ' - ' +
+              ' ' +
               new Date(props.issue.created_at).toLocaleTimeString()}
           </p>
         </div>

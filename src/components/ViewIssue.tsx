@@ -3,20 +3,19 @@ import { RouteComponentProps, withRouter } from 'react-router';
 import { IssueContext } from '../context/IssueContext';
 import { Comment, Issue, IssueState } from '../types';
 import IssueComment from './IssueComment';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from 'react-markdown/with-html';
 import axios from 'axios';
 
 interface Props extends RouteComponentProps<{ id: string | undefined }> {}
 
 const ViewIssue: FC<Props> = (props: Props) => {
   const issueContext: IssueState = useContext(IssueContext);
-  const issueId = Number(props.match?.params.id);
-  const [issue, setIssue] = useState<Issue>();
-  const [comments, setComments] = useState<Comment[]>();
+  const [comments, setComments] = useState<Comment[]>([]);
 
-  useEffect(() => {
-    setIssue(issueContext.issues.find((issue) => issue.id == issueId));
-  });
+  const issueId = Number(props.match?.params.id);
+  const issue: Issue | undefined = issueContext.issues.find(
+    (issue) => issue.id === issueId
+  );
 
   useEffect(() => {
     if (issue) {
@@ -51,11 +50,15 @@ const ViewIssue: FC<Props> = (props: Props) => {
           </p>
           <div className="card">
             <div className="card-header d-flex">
-              <img src={issue.user.avatar_url} className="user-avatar" />
+              <img
+                src={issue.user.avatar_url}
+                className="user-avatar"
+                alt={issue.user.login}
+              />
               <p>{issue.user.login}</p>
             </div>
             <div className="card-body">
-              {<ReactMarkdown source={issue.body} />}
+              <ReactMarkdown source={issue.body} escapeHtml={false} />
             </div>
           </div>
         </div>

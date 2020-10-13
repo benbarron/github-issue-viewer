@@ -75,6 +75,12 @@ export interface IssueState {
   fetch?: () => Promise<void>;
 }
 
+export interface IssueApiResponse {
+  total_count: number;
+  incomplete_results: boolean;
+  items: Issue[];
+}
+
 export enum Actions {
   SET_LOADING,
   SET_ISSUES,

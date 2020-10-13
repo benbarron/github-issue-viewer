@@ -9,7 +9,8 @@ interface Props extends RouteChildrenProps<{ page: string | undefined }> {}
 
 const IssueList: FC<Props> = (props: Props) => {
   const issueContext: IssueState = useContext(IssueContext);
-  const pageCount = Math.ceil(issueContext.issues.length / 10);
+  const numIssues = issueContext.issues.length;
+  const pageCount = Math.ceil(numIssues / 10);
   const currentPage = Number(props.match?.params.page);
   const start = (currentPage - 1) * 10;
   const end = start + 10;
@@ -19,7 +20,8 @@ const IssueList: FC<Props> = (props: Props) => {
       <div>
         {!issueContext.loading && (
           <Fragment>
-            Displaying {start + 1}-{end} of {issueContext.issues.length} issues
+            Displaying {start + 1}-{Math.min(end, numIssues)} of {numIssues}{' '}
+            issues
           </Fragment>
         )}
       </div>

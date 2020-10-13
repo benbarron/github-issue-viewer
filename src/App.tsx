@@ -15,7 +15,7 @@ const App = () => {
   const issueContext: any = useContext(IssueContext);
 
   useEffect(() => {
-    issueContext.fetch();
+    issueContext.fetch().catch((err: any) => console.log(err));
   }, []);
 
   return (

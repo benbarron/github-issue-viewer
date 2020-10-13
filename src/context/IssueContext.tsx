@@ -19,26 +19,24 @@ export const IssueProvider = (props: Props): JSX.Element => {
 
   const fetch = async () => {
     dispatch({ type: Actions.SET_LOADING });
-    const res1: AxiosResponse<Issue[]> = await Axios.get(
-      'https://api.github.com/repos/walmartlabs/thorax/issues?state=open'
-    );
-    const res2: AxiosResponse<Issue[]> = await Axios.get(
-      'https://api.github.com/repos/walmartlabs/thorax/issues?state=closed'
-    );
-    setTimeout(() => {
-      dispatch({
-        type: Actions.SET_ISSUES,
-        payload: {
-          issues: [...res1.data, ...res2.data].sort((a, b) => {
-            if (new Date(a.created_at) < new Date(b.created_at)) {
-              return 1;
-            } else {
-              return -1;
-            }
-          }),
-        },
-      });
-    }, 200);
+
+    const url = 'https://api.github.com/repos/walmartlabs/thorax/issues';
+
+    const res: AxiosResponse<Issue[]>[] = await Axios.all([
+      Axios.get(`${url}?state=closed`),
+      Axios.get(`${url}?state=open`),
+    ]);
+
+    const issues = [...res[0].data, ...res[1].data].sort((a, b) => {
+      return new Date(a.created_at) < new Date(b.created_at) ? 1 : -1;
+    });
+
+    dispatch({
+      type: Actions.SET_ISSUES,
+      payload: {
+        issues,
+      },
+    });
   };
 
   return (
