@@ -1,0 +1,13 @@
+.issue-comment.card {
+  .card-header {
+    border: none;
+    background: none;
+  }
+  p.user-login {
+    align-self: center;
+  }
+  img.user-avatar {
+    width: 35px;
+    height: 35px;
+  }
+}

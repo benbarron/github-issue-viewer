@@ -1,11 +1,10 @@
 import React, { FC, Fragment, useContext, useEffect, useState } from 'react';
-import {
-  RouteChildrenProps,
-  RouteComponentProps,
-  withRouter,
-} from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { IssueContext } from '../context/IssueContext';
-import { Issue, IssueState } from '../types';
+import { Comment, Issue, IssueState } from '../types';
+import IssueComment from './IssueComment';
+import ReactMarkdown from 'react-markdown';
+import axios from 'axios';
 
 interface Props extends RouteComponentProps<{ id: string | undefined }> {}
 
@@ -13,10 +12,20 @@ const ViewIssue: FC<Props> = (props: Props) => {
   const issueContext: IssueState = useContext(IssueContext);
   const issueId = Number(props.match?.params.id);
   const [issue, setIssue] = useState<Issue>();
+  const [comments, setComments] = useState<Comment[]>();
 
   useEffect(() => {
     setIssue(issueContext.issues.find((issue) => issue.id == issueId));
   });
+
+  useEffect(() => {
+    if (issue) {
+      axios
+        .get(String(issue?.comments_url))
+        .then((res) => setComments(res.data))
+        .catch((err) => console.log(err));
+    }
+  }, [issue]);
 
   if (!issue) {
     return <Fragment></Fragment>;
@@ -46,12 +55,19 @@ const ViewIssue: FC<Props> = (props: Props) => {
               <p>{issue.user.login}</p>
             </div>
             <div className="card-body">
-              <p>{issue.body}</p>
+              {<ReactMarkdown source={issue.body} />}
             </div>
           </div>
         </div>
       </div>
       <div className="row mt-3">
+        <div className="col">
+          {comments?.map((comment) => (
+            <IssueComment key={comment.id} comment={comment} />
+          ))}
+        </div>
+      </div>
+      <div className="row mt-5">
         <div className="col">
           <button
             onClick={props.history.goBack}

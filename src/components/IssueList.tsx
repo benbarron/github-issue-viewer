@@ -17,6 +17,13 @@ const IssueList: FC<Props> = (props: Props) => {
   return (
     <Fragment>
       <div>
+        {!issueContext.loading && (
+          <Fragment>
+            Displaying {start + 1}-{end} of {issueContext.issues.length} issues
+          </Fragment>
+        )}
+      </div>
+      <div>
         {issueContext.issues.slice(start, end).map((issue: Issue) => (
           <IssueCard key={issue.id} issue={issue} />
         ))}
